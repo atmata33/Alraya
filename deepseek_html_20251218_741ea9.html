@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الراية ماركت - عروض المجلة كاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        /* الهيدر */
+        .header {
+            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        
+        /* شريط البحث */
+        .search-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus-within {
+            border-color: #c62828;
+            box-shadow: 0 6px 25px rgba(198, 40, 40, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            background: transparent;
+            color: #333;
+        }
+        
+        .search-input::placeholder {
+            color: #999;
+        }
+        
+        .search-btn {
+            background: #c62828;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: #b71c1c;
+        }
+        
+        /* فئات المنتجات */
+        .categories {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem;
+            margin: 0 auto 1.5rem;
+            max-width: 1200px;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            border-color: #c62828;
+            color: #c62828;
+        }
+        
+        .category-btn.active {
+            background: #c62828;
+            color: white;
+            border-color: #c62828;
+        }
+        
+        /* نتائج البحث */
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .results-count {
+            font-size: 1.2rem;
+            color: #444;
+            font-weight: 600;
+        }
+        
+        .results-count span {
+            color: #c62828;
+            font-size: 1.4rem;
+        }
+        
+        /* شبكة المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #2e7d32;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .product-image {
+            height: 160px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .product-content {
+            padding: 1.2rem;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            height: 3rem;
+            overflow: hidden;
+        }
+        
+        .product-prices {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .current-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #c62828;
+        }
+        
+        .old-price {
+            font-size: 1.1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .price-diff {
+            font-size: 0.9rem;
+            color: #2e7d32;
+            font-weight: 600;
+            background: #e8f5e9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .product-category {
+            font-size: 0.8rem;
+            color: #777;
+            background: #f5f5f5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .view-details {
+            width: 100%;
+            padding: 0.8rem;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #333;
+        }
+        
+        .view-details:hover {
+            background: #e0e0e0;
+        }
+        
+        /* رسالة عدم وجود نتائج */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            grid-column: 1 / -1;
+        }
+        
+        .no-results-icon {
+            font-size: 4rem;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .no-results p {
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        /* الفوتر */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 3rem 1rem 1.5rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #c62828;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .contact-item i {
+            color: #c62828;
+            width: 20px;
+        }
+        
+        .phone-number {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: bold;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* أحجام الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .logo {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .search-container {
+                margin: 1.5rem auto;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                border-radius: 12px;
+                padding: 0;
+                overflow: hidden;
+            }
+            
+            .search-input {
+                padding: 1rem;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .search-btn {
+                border-radius: 0;
+                padding: 1rem;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* تمييز نتائج البحث */
+        .highlight {
+            background-color: #fff9c4;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        /* تحميل */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🛒</div>
+                <div class="logo-text">
+                    <h1>الراية ماركت</h1>
+                    <p>عروض المجلة كاملة - مع الأسعار الأصلية</p>
+                </div>
+            </div>
+            <div class="tagline">
+                <i class="fas fa-tag"></i> جميع الأسعار بالجنيه المصري
+            </div>
+        </div>
+    </div>
+    
+    <!-- شريط البحث -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن أي منتج في المجلة...">
+            <button class="search-btn" id="searchBtn">
+                <i class="fas fa-search"></i> بحث
+            </button>
+        </div>
+    </div>
+    
+    <!-- فئات المنتجات -->
+    <div class="categories">
+        <button class="category-btn active" data-category="all">الكل</button>
+        <button class="category-btn" data-category="points">عروض النقاط</button>
+        <button class="category-btn" data-category="meat">لحوم ودواجن</button>
+        <button class="category-btn" data-category="fish">أسماك ومأكولات بحرية</button>
+        <button class="category-btn" data-category="deli">أجبان وألبان</button>
+        <button class="category-btn" data-category="grocery">بقالة وعطارة</button>
+        <button class="category-btn" data-category="detergents">منظفات</button>
+        <button class="category-btn" data-category="personal">عناية شخصية</button>
+        <button class="category-btn" data-category="frozen">مجمدة</button>
+        <button class="category-btn" data-category="home">أدوات منزلية</button>
+    </div>
+    
+    <!-- نتائج البحث -->
+    <div class="results-container">
+        <div class="results-header">
+            <div class="results-count">
+                عدد المنتجات: <span id="resultsCount">0</span>
+            </div>
+        </div>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- سيتم تعبئة المنتجات هنا -->
+        </div>
+    </div>
+    
+    <!-- الفوتر -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>الراية ماركت</h3>
+                <p>ببساطة نحن مختلفون - منذ 1996</p>
+                <p>نقدم لكم أفضل المنتجات الطازجة والعروض المميزة بأفضل الأسعار</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <div>للطلبات والتوصيل</div>
+                            <a href="tel:01003116508" class="phone-number">01003116508</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div>ساعات العمل</div>
+                            <div>9 صباحاً - 12 منتصف الليل</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-truck"></i>
+                        <div>
+                            <div>التوصيل</div>
+                            <div>مجاني للطلبات فوق 500 ج.م</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <a href="#"><i class="fas fa-fire"></i> العروض الحارة</a>
+                <a href="#"><i class="fas fa-tags"></i> عروض النقاط</a>
+                <a href="#"><i class="fas fa-leaf"></i> المنتجات الطازجة</a>
+                <a href="#"><i class="fas fa-percent"></i> المنتجات المخفضة</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> فروعنا</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>أقسام المنتجات</h3>
+                <a href="#" data-category="meat"><i class="fas fa-drumstick-bite"></i> اللحوم والدواجن</a>
+                <a href="#" data-category="fish"><i class="fas fa-fish"></i> الأسماك والمأكولات البحرية</a>
+                <a href="#" data-category="deli"><i class="fas fa-cheese"></i> الأجبان والألبان</a>
+                <a href="#" data-category="grocery"><i class="fas fa-shopping-basket"></i> البقالة والعطارة</a>
+                <a href="#" data-category="detergents"><i class="fas fa-pump-soap"></i> المنظفات</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>معلومات تهمك</h3>
+                <p><i class="fas fa-info-circle"></i> جميع الأسعار تشمل الضريبة</p>
+                <p><i class="fas fa-award"></i> ضمان جودة المنتجات</p>
+                <p><i class="fas fa-sync-alt"></i> إمكانية الإرجاع خلال 24 ساعة</p>
+                <p><i class="fas fa-credit-card"></i> متاح جميع وسائل الدفع</p>
+                <p><i class="fas fa-bolt"></i> توصيل سريع خلال 90 دقيقة</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 الراية ماركت. جميع الحقوق محفوظة.</p>
+            <p>هذا الموقع لعرض منتجات وعروض الراية ماركت فقط - للطلب يرجى الاتصال على الرقم أعلاه</p>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المنتجات الكاملة مع الأسعار الأصلية
+        const products = [
+            // عروض النقاط (صفحة 2)
+            { id: 1, name: "جبنة شيدر نيوزيلاندي مستورد (250 جم)", price: 100.00, oldPrice: 120.00, category: "points", image: "🧀" },
+            { id: 2, name: "أفانتي جبنة براميلي/فيتا (250 جم)", price: 44.95, oldPrice: 59.95, category: "points", image: "🧀" },
+            { id: 3, name: "أطياب لانشون أنواع (250 جم)", price: 59.95, oldPrice: 79.95, category: "points", image: "🥓" },
+            { id: 4, name: "أبو عوف قهوة سادة (200 جم)", price: 170.00, oldPrice: 200.00, category: "points", image: "☕" },
+            { id: 5, name: "نيدو حليب بودر (500 جم)", price: 185.00, oldPrice: 220.00, category: "points", image: "🥛" },
+            { id: 6, name: "إيطاليانو جبنة فور تشيز (750 جم)", price: 119.95, oldPrice: 149.95, category: "points", image: "🍕" },
+            { id: 7, name: "موفالي بطاطس نصف مقلية (2.5 كجم)", price: 149.95, oldPrice: 199.95, category: "points", image: "🍟" },
+            { id: 8, name: "عبور لاند عصير أنواع (1 لتر)", price: 28.95, oldPrice: 35.95, category: "points", image: "🧃" },
+            { id: 9, name: "عبور لاند مشروب أنواع (200 مل)", price: 5.95, oldPrice: 7.95, category: "points", image: "🧃" },
+            { id: 10, name: "شنايدر مشروب شعير (1 لتر)", price: 19.95, oldPrice: 24.95, category: "points", image: "🍺" },
+            { id: 11, name: "أبو عوف فشار أنواع (100 جم)", price: 25.00, oldPrice: 30.00, category: "points", image: "🍿" },
+            { id: 12, name: "العراف أرز (5 كجم)", price: 115.00, oldPrice: 135.00, category: "points", image: "🌾" },
+            { id: 13, name: "العراف أرز (1 كجم)", price: 22.95, oldPrice: 29.95, category: "points", image: "🍚" },
+            { id: 14, name: "أبو عوف بافس أنواع (40 جم)", price: 9.95, oldPrice: 12.95, category: "points", image: "🥨" },
+            { id: 15, name: "أبو عوف بروتين بافس (60 جم)", price: 17.95, oldPrice: 22.95, category: "points", image: "🥨" },
+
+            // البقالة والعطارة (صفحة 3)
+            { id: 16, name: "أرز بسمتي ذهبي (1 كجم)", price: 59.95, oldPrice: 79.30, category: "grocery", image: "🍚" },
+            { id: 17, name: "سحلب سادة (250 جم)", price: 17.50, oldPrice: 22.50, category: "grocery", image: "🥛" },
+            { id: 18, name: "أرز بسمتي هندي فاخر (1 كجم)", price: 69.95, oldPrice: 89.95, category: "grocery", image: "🍚" },
+            { id: 19, name: "أرز بلدي رفيع (1 كجم)", price: 23.95, oldPrice: 29.95, category: "grocery", image: "🌾" },
+            { id: 20, name: "مكرونة أنواع (1 كجم)", price: 22.95, oldPrice: 27.95, category: "grocery", image: "🍝" },
+            { id: 21, name: "دقيق أبيض فاخر (1 كجم)", price: 21.95, oldPrice: 26.95, category: "grocery", image: "🌾" },
+            { id: 22, name: "عدس أصفر (250 جم)", price: 13.95, oldPrice: 17.95, category: "grocery", image: "🍲" },
+            { id: 23, name: "حلية محوجة (250 جم)", price: 19.95, oldPrice: 24.95, category: "grocery", image: "🌿" },
+            { id: 24, name: "ينسون بلدي (250 جم)", price: 44.95, oldPrice: 55.30, category: "grocery", image: "🌿" },
+            { id: 25, name: "فلفل أسود ناعم (100 جم)", price: 41.95, oldPrice: 51.95, category: "grocery", image: "🧂" },
+            { id: 26, name: "فلفل أسود حصى (100 جم)", price: 45.95, oldPrice: 55.95, category: "grocery", image: "🧂" },
+            { id: 27, name: "فول تدميس بلدي (500 جم)", price: 30.95, oldPrice: 39.95, category: "grocery", image: "🥣" },
+            { id: 28, name: "كمون ناعم/حصى (100 جم)", price: 21.95, oldPrice: 27.95, category: "grocery", image: "🌿" },
+            { id: 29, name: "شطة ناعمة (100 جم)", price: 10.95, oldPrice: 14.95, category: "grocery", image: "🌶️" },
+            { id: 30, name: "إيليت مربع شوكولاتة بيضاء (100 جم)", price: 20.95, oldPrice: 25.95, category: "grocery", image: "🍫" },
+            { id: 31, name: "حلوى كاندي (100 جم)", price: 24.95, oldPrice: 29.95, category: "grocery", image: "🍬" },
+            { id: 32, name: "زيت سمسم (30 مل)", price: 29.95, oldPrice: 35.95, category: "grocery", image: "🧴" },
+            { id: 33, name: "زيت خروع (30 مل)", price: 20.95, oldPrice: 25.95, category: "grocery", image: "🧴" },
+            { id: 34, name: "مقرمشات استكس (250 جم)", price: 22.50, oldPrice: 27.50, category: "grocery", image: "🥨" },
+
+            // اللحوم والدواجن (صفحة 4)
+            { id: 35, name: "لحم كندوز بلدي ممتاز (1 كجم)", price: 369.95, oldPrice: 469.95, category: "meat", image: "🥩" },
+            { id: 36, name: "بفتيك / روستو كندوز بلدي (1 كجم)", price: 434.95, oldPrice: 534.95, category: "meat", image: "🥩" },
+            { id: 37, name: "مفروم ممتاز بلدي (1 كجم)", price: 299.95, oldPrice: 399.95, category: "meat", image: "🥩" },
+            { id: 38, name: "ضاني برقي كامل (1 كجم)", price: 430.00, oldPrice: 530.00, category: "meat", image: "🍖" },
+            { id: 39, name: "كباب حلة مستورد (1 كجم)", price: 289.95, oldPrice: 389.95, category: "meat", image: "🥩" },
+            { id: 40, name: "سجق إيطالي/كفتة سيخ/برجر مخصوص (1 كجم)", price: 259.95, oldPrice: 359.95, category: "meat", image: "🍢" },
+            { id: 41, name: "رقبة ضاني / كبدة ضاني بلدي (1 كجم)", price: 374.95, oldPrice: 474.95, category: "meat", image: "🥩" },
+            { id: 42, name: "مفروم مستورد (1 كجم)", price: 169.95, oldPrice: 219.95, category: "meat", image: "🥩" },
+            { id: 43, name: "كتف بتلو بالعظم أسترالي (1 كجم)", price: 224.95, oldPrice: 299.95, category: "meat", image: "🍖" },
+            { id: 44, name: "شاورمة مستوردة (1 كجم)", price: 244.95, oldPrice: 329.95, category: "meat", image: "🥩" },
+            { id: 45, name: "كبدة أمريكي (1 كجم)", price: 129.95, oldPrice: 179.95, category: "meat", image: "🥩" },
+            { id: 46, name: "عكاوي برازيلي مستوردة (1 كجم)", price: 174.95, oldPrice: 229.95, category: "meat", image: "🥩" },
+            { id: 47, name: "فيليه دجاج متبل (1 كجم)", price: 169.95, oldPrice: 219.95, category: "meat", image: "🍗" },
+            { id: 48, name: "وراك بالعظم دجاج متبل (1 كجم)", price: 79.95, oldPrice: 109.95, category: "meat", image: "🍗" },
+            { id: 49, name: "شيش دجاج متبل (1 كجم)", price: 149.95, oldPrice: 199.95, category: "meat", image: "🍗" },
+            { id: 50, name: "العابد بط فريش (1 كجم)", price: 117.00, oldPrice: 147.00, category: "meat", image: "🦆" },
+            { id: 51, name: "دجاج كامل (1 كجم)", price: 104.95, oldPrice: 134.95, category: "meat", image: "🐔" },
+            { id: 52, name: "كفتة أرز / ممبار محشي (800 جم)", price: 119.95, oldPrice: 149.95, category: "meat", image: "🍲" },
+            { id: 53, name: "سمبوسك أنواع (750 جم)", price: 114.95, oldPrice: 144.95, category: "meat", image: "🥟" },
+
+            // النعام والرومي (صفحة 6)
+            { id: 54, name: "كباب حلة/ستيك/بفتيك نعام (1 كجم)", price: 1399.95, oldPrice: 1699.95, category: "meat", image: "🥩" },
+            { id: 55, name: "كبدة وقلب نعام (1 كجم)", price: 384.95, oldPrice: 484.95, category: "meat", image: "🥩" },
+            { id: 56, name: "فيليه رومي (1 كجم)", price: 264.95, oldPrice: 334.95, category: "meat", image: "🍗" },
+            { id: 57, name: "ورك رومي (1 كجم)", price: 184.95, oldPrice: 234.95, category: "meat", image: "🍗" },
+            { id: 58, name: "دبوس رومي (1 كجم)", price: 144.95, oldPrice: 184.95, category: "meat", image: "🍗" },
+            { id: 59, name: "عكاوي رومي (1 كجم)", price: 124.95, oldPrice: 164.95, category: "meat", image: "🍗" },
+            { id: 60, name: "كبدة رومي (1 كجم)", price: 149.95, oldPrice: 199.95, category: "meat", image: "🍗" },
+
+            // الأسماك والمأكولات البحرية (صفحة 5)
+            { id: 61, name: "كاليماري أقماع (1 كجم)", price: 230.95, oldPrice: 290.95, category: "fish", image: "🦑" },
+            { id: 62, name: "رنجة هولاندي ممتازة (1 كجم)", price: 139.95, oldPrice: 179.95, category: "fish", image: "🐟" },
+            { id: 63, name: "سي فود ميكس عشرة على عشرة (800 جم)", price: 119.95, oldPrice: 149.95, category: "fish", image: "🍲" },
+            { id: 64, name: "جمبري فاخر (400 جم)", price: 419.95, oldPrice: 519.95, category: "fish", image: "🦐" },
+            { id: 65, name: "جمبري مميز (400 جم)", price: 389.95, oldPrice: 489.95, category: "fish", image: "🦐" },
+            { id: 66, name: "جمبري بيبي (400 جم)", price: 354.95, oldPrice: 454.95, category: "fish", image: "🦐" },
+            { id: 67, name: "سمك ماكريل (1 كجم)", price: 129.95, oldPrice: 169.95, category: "fish", image: "🐟" },
+            { id: 68, name: "الجزيرة باسا أبيض (1 كجم)", price: 184.95, oldPrice: 234.95, category: "fish", image: "🐟" },
+            { id: 69, name: "سمك سردين (1 كجم)", price: 79.95, oldPrice: 109.95, category: "fish", image: "🐟" },
+            { id: 70, name: "سمك مكرونة (1 كجم)", price: 109.95, oldPrice: 139.95, category: "fish", image: "🐟" },
+            { id: 71, name: "أصابع كابوريا (250 جم)", price: 44.95, oldPrice: 59.95, category: "fish", image: "🦀" },
+
+            // الألبان والأجبان (صفحة 8، 10)
+            { id: 72, name: "جبنة رومي بطارخ (250 جم)", price: 77.50, oldPrice: 97.50, category: "deli", image: "🧀" },
+            { id: 73, name: "جبنة شيدر أبيض مستورد (250 جم)", price: 89.95, oldPrice: 109.95, category: "deli", image: "🧀" },
+            { id: 74, name: "جبنة رومي قديم (250 جم)", price: 67.50, oldPrice: 87.50, category: "deli", image: "🧀" },
+            { id: 75, name: "جبنة براميلي أنواع (250 جم)", price: 39.95, oldPrice: 49.95, category: "deli", image: "🧀" },
+            { id: 76, name: "جبنة ثلاجة دوبل (250 جم)", price: 34.95, oldPrice: 44.95, category: "deli", image: "🧀" },
+            { id: 77, name: "جبنة قريش تحابيش (250 جم)", price: 20.00, oldPrice: 25.00, category: "deli", image: "🧀" },
+            { id: 78, name: "الراية جبنة ملح خفيف (250 جم)", price: 29.95, oldPrice: 39.95, category: "deli", image: "🧀" },
+            { id: 79, name: "مزارع دينا جبنة فلمنك/جودة (250 جم)", price: 89.95, oldPrice: 109.95, category: "deli", image: "🧀" },
+            { id: 80, name: "جبنة موزاريلا مبشور (250 جم)", price: 27.50, oldPrice: 35.50, category: "deli", image: "🧀" },
+            { id: 81, name: "روتانا زبدة طبيعي (250 جم)", price: 144.95, oldPrice: 174.95, category: "deli", image: "🧈" },
+            { id: 82, name: "حلواني لانشون أنواع (250 جم)", price: 74.95, oldPrice: 94.95, category: "deli", image: "🥓" },
+            { id: 83, name: "فيرن زبدة خليط (1 كجم)", price: 148.00, oldPrice: 188.00, category: "deli", image: "🧈" },
+            { id: 84, name: "المراعي زبادي طبيعي (105 جم)", price: 14.00, oldPrice: 18.00, category: "deli", image: "🥛" },
+            { id: 85, name: "عزبتنا سمن جاموسي (1 كجم)", price: 444.95, oldPrice: 544.95, category: "deli", image: "🏺" },
+
+            // المجمدة (صفحة 14)
+            { id: 86, name: "حلواني بيف برجر (1 كجم)", price: 219.95, oldPrice: 279.95, category: "frozen", image: "🍔" },
+            { id: 87, name: "إيطاليانو جبنة موزاريلا (1 كجم)", price: 119.95, oldPrice: 149.95, category: "frozen", image: "🧀" },
+            { id: 88, name: "اللحيمي برجر كاترينج (20 قطعة)", price: 109.95, oldPrice: 139.95, category: "frozen", image: "🍔" },
+            { id: 89, name: "أطياب بانية أنواع (1 كجم)", price: 234.95, oldPrice: 294.95, category: "frozen", image: "🍗" },
+            { id: 90, name: "الوطنية ستربس أنواع (1 كجم)", price: 254.95, oldPrice: 314.95, category: "frozen", image: "🍗" },
+            { id: 91, name: "كوكي بانية (20 قطعة)", price: 179.95, oldPrice: 229.95, category: "frozen", image: "🍗" },
+            { id: 92, name: "كوكي ناجتس (60 قطعة)", price: 279.95, oldPrice: 349.95, category: "frozen", image: "🍗" },
+
+            // السلع الجافة والبقالة (صفحة 24)
+            { id: 93, name: "أرز ريحانة فاخر (1 كجم)", price: 31.95, oldPrice: 39.95, category: "grocery", image: "🍚" },
+            { id: 94, name: "أرز زي العسل (5 كجم)", price: 145.00, oldPrice: 175.00, category: "grocery", image: "🌾" },
+            { id: 95, name: "سكر المطبخ (1 كجم)", price: 30.95, oldPrice: 38.95, category: "grocery", image: "🍚" },
+            { id: 96, name: "شاي أحمد لندني (100 فتلة)", price: 119.00, oldPrice: 139.00, category: "grocery", image: "☕" },
+            { id: 97, name: "شاي الكبوس ناعم (200 جم)", price: 89.95, oldPrice: 109.95, category: "grocery", image: "☕" },
+            { id: 98, name: "عسل نحل إيزيس (450 جم)", price: 115.00, oldPrice: 135.00, category: "grocery", image: "🍯" },
+            { id: 99, name: "كوكاكولا / سبرايت (950 مل)", price: 20.95, oldPrice: 25.95, category: "grocery", image: "🥤" },
+
+            // المنظفات (صفحة 30-32)
+            { id: 100, name: "أوكسي أوتوماتيك (4كجم + 2كجم)", price: 324.95, oldPrice: 399.95, category: "detergents", image: "🧼" },
+            { id: 101, name: "برسيل بودر (8 كجم)", price: 389.95, oldPrice: 469.95, category: "detergents", image: "🧼" },
+            { id: 102, name: "أوكسي جل (3 لتر)", price: 169.95, oldPrice: 209.95, category: "detergents", image: "🧴" },
+            { id: 103, name: "أوكسي سائل للأطباق (2.5 كجم)", price: 89.95, oldPrice: 109.95, category: "detergents", image: "🍽️" },
+            { id: 104, name: "فيبا صابون سائل (4 كجم)", price: 99.95, oldPrice: 124.95, category: "detergents", image: "🧼" },
+
+            // العناية الشخصية (صفحة 39-41)
+            { id: 105, name: "بامبرز أنواع (58 حفاضة)", price: 353.95, oldPrice: 423.95, category: "personal", image: "👶" },
+            { id: 106, name: "صانسيلك شامبو (600 مل)", price: 99.95, oldPrice: 124.95, category: "personal", image: "🧴" },
+
+            // الأدوات المنزلية (صفحة 45-46)
+            { id: 107, name: "لحاف كريستال دبل فيس (220×240)", price: 1074.95, oldPrice: 1274.95, category: "home", image: "🛏️" },
+            { id: 108, name: "دفاية شانية (200×220)", price: 474.95, oldPrice: 574.95, category: "home", image: "🛌" },
+            { id: 109, name: "نوفال مقلاية جرانيت (مقاس 22)", price: 235.00, oldPrice: 285.00, category: "home", image: "🍳" },
+            { id: 110, name: "أكياس قمامة هوم جيني (15 كيس)", price: 94.95, oldPrice: 114.95, category: "home", image: "🗑️" }
+        ];
+
+        // عناصر DOM
+        const productsGrid = document.getElementById('productsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsCount = document.getElementById('resultsCount');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        // متغيرات الفلترة
+        let currentSearch = '';
+        let currentCategory = 'all';
+
+        // حساب نسبة الخصم
+        function calculateDiscount(oldPrice, newPrice) {
+            if (!oldPrice || oldPrice <= newPrice) return 0;
+            return Math.round(((oldPrice - newPrice) / oldPrice) * 100);
+        }
+
+        // تنسيق السعر
+        function formatPrice(price) {
+            return price.toFixed(2);
+        }
+
+        // حساب الفرق بين السعرين
+        function calculatePriceDiff(oldPrice, newPrice) {
+            if (!oldPrice || oldPrice <= newPrice) return 0;
+            return oldPrice - newPrice;
+        }
+
+        // عرض المنتجات
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+            
+            let filteredProducts;
+            
+            // فلترة حسب البحث والفئة
+            if (currentCategory === 'all') {
+                filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            } else {
+                filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(currentSearch.toLowerCase()) &&
+                    product.category === currentCategory
+                );
+            }
+            
+            // تحديث عدد النتائج
+            resultsCount.textContent = filteredProducts.length;
+            
+            if (filteredProducts.length === 0) {
+                // عرض رسالة عدم وجود نتائج
+                productsGrid.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>لم نعثر على منتجات تطابق بحثك</h3>
+                        <p>حاول استخدام كلمات بحث مختلفة أو اختيار فئة أخرى.</p>
+                        <button class="view-details" onclick="resetSearch()" style="margin-top: 1rem;">
+                            <i class="fas fa-redo"></i> عرض جميع المنتجات
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // عرض المنتجات المفلترة
+            filteredProducts.forEach(product => {
+                const discount = calculateDiscount(product.oldPrice, product.price);
+                const priceDiff = calculatePriceDiff(product.oldPrice, product.price);
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                // تمييز الكلمة المبحوث عنها
+                let displayName = product.name;
+                if (currentSearch.trim() !== '') {
+                    const searchLower = currentSearch.toLowerCase();
+                    const nameLower = product.name.toLowerCase();
+                    const index = nameLower.indexOf(searchLower);
+                    
+                    if (index !== -1) {
+                        const before = product.name.substring(0, index);
+                        const match = product.name.substring(index, index + currentSearch.length);
+                        const after = product.name.substring(index + currentSearch.length);
+                        
+                        displayName = `${before}<span class="highlight">${match}</span>${after}`;
+                    }
+                }
+                
+                // اسم الفئة بالعربية
+                const categoryNames = {
+                    'points': 'عروض النقاط',
+                    'meat': 'لحوم ودواجن',
+                    'fish': 'أسماك',
+                    'deli': 'أجبان وألبان',
+                    'grocery': 'بقالة وعطارة',
+                    'detergents': 'منظفات',
+                    'personal': 'عناية شخصية',
+                    'frozen': 'مجمدة',
+                    'home': 'أدوات منزلية'
+                };
+                
+                const categoryName = categoryNames[product.category] || product.category;
+                
+                productCard.innerHTML = `
+                    ${discount > 0 ? `<div class="discount-badge">خصم ${discount}%</div>` : ''}
+                    <div class="product-image">${product.image}</div>
+                    <div class="product-content">
+                        <div class="product-category">${categoryName}</div>
+                        <h3 class="product-name">${displayName}</h3>
+                        <div class="product-prices">
+                            <div class="current-price">${formatPrice(product.price)} ج.م</div>
+                            ${product.oldPrice && product.oldPrice > product.price ? 
+                                `<div class="old-price">${formatPrice(product.oldPrice)} ج.م</div>` : ''}
+                            ${priceDiff > 0 ? `<div class="price-diff">وفر ${formatPrice(priceDiff)} ج.م</div>` : ''}
+                        </div>
+                        <button class="view-details" onclick="showProductDetails(${product.id})">
+                            <i class="fas fa-info-circle"></i> عرض التفاصيل
+                        </button>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // البحث الفوري أثناء الكتابة
+        searchInput.addEventListener('input', function() {
+            currentSearch = this.value;
+            renderProducts();
+        });
+
+        // البحث عند الضغط على زر البحث
+        searchBtn.addEventListener('click', function() {
+            currentSearch = searchInput.value;
+            renderProducts();
+        });
+
+        // البحث عند الضغط على Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                currentSearch = this.value;
+                renderProducts();
+            }
+        });
+
+        // الفلترة حسب الفئة
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // إزالة النشاط من جميع الأزرار
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                // إضافة النشاط للزر المحدد
+                this.classList.add('active');
+                // تحديث الفئة الحالية
+                currentCategory = this.dataset.category;
+                // إعادة عرض المنتجات
+                renderProducts();
+            });
+        });
+
+        // عرض جميع المنتجات
+        function resetSearch() {
+            currentSearch = '';
+            currentCategory = 'all';
+            searchInput.value = '';
+            
+            // إعادة تعيين أزرار الفئات
+            categoryButtons.forEach(btn => {
+                if (btn.dataset.category === 'all') {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            renderProducts();
+            searchInput.focus();
+        }
+
+        // عرض تفاصيل المنتج
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            const discount = calculateDiscount(product.oldPrice, product.price);
+            const priceDiff = calculatePriceDiff(product.oldPrice, product.price);
+            
+            const categoryNames = {
+                'points': 'عروض النقاط',
+                'meat': 'اللحوم والدواجن',
+                'fish': 'الأسماك والمأكولات البحرية',
+                'deli': 'الأجبان والألبان',
+                'grocery': 'البقالة والعطارة',
+                'detergents': 'المنظفات',
+                'personal': 'العناية الشخصية',
+                'frozen': 'المجمدة',
+                'home': 'الأدوات المنزلية'
+            };
+            
+            const categoryName = categoryNames[product.category] || product.category;
+            
+            let priceInfo = `💰 السعر: ${formatPrice(product.price)} ج.م`;
+            
+            if (product.oldPrice && product.oldPrice > product.price) {
+                priceInfo += `
+                📉 السعر الأصلي: ${formatPrice(product.oldPrice)} ج.م
+                💰 وفرت: ${formatPrice(priceDiff)} ج.م
+                🏷️ نسبة الخصم: ${discount}%`;
+            }
+            
+            const details = `
+                🛒 الراية ماركت
+                ${product.image} ${product.name}
+                ----------------
+                📂 القسم: ${categoryName}
+                ${priceInfo}
+                
+                📞 للطلب والتوصيل: 01003116508
+                ⏰ ساعات العمل: 9 صباحاً - 12 مساءً
+                🚚 التوصيل مجاني للطلبات فوق 500 ج.م
+                
+                ℹ️ للاستفسار عن المنتج أو التوصيل يرجى الاتصال بالرقم أعلاه
+            `;
+            
+            alert(details);
+        }
+
+        // ربط روابط الفوتر
+        document.querySelectorAll('.footer-section a[data-category]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.dataset.category;
+                
+                // تحديث الفئة
+                categoryButtons.forEach(btn => {
+                    if (btn.dataset.category === category) {
+                        btn.click();
+                    }
+                });
+            });
+        });
+
+        // التركيز على حقل البحث عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            searchInput.focus();
+            renderProducts();
+        });
+    </script>
+</body>
+</html>
